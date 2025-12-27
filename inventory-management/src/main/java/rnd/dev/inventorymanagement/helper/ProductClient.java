@@ -4,8 +4,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
-import java.util.UUID;
-
 @Component
 public class ProductClient {
 
@@ -15,7 +13,7 @@ public class ProductClient {
         this.webClient = webClientBuilder.baseUrl("http://localhost:8095/product").build();
     }
 
-    public boolean productExists(UUID productId) {
+    public boolean productExists(String productId) {
         try {
             // matches /availability/{productId}
             // returns true/false

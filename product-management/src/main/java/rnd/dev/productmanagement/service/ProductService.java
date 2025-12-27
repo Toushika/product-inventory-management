@@ -10,7 +10,6 @@ import rnd.dev.productmanagement.dto.response.ProductUpdateResponse;
 import rnd.dev.productmanagement.enums.ProductCategory;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface ProductService {
 
@@ -18,14 +17,14 @@ public interface ProductService {
 
     List<ProductDtoResponse> getAll();
 
-    ProductDtoResponse getById(UUID productId);
+    ProductDtoResponse getById(String productId);
 
     Page<ProductDtoResponse> getByCategory(ProductCategory productCategory, int page, int size);
 
-    ProductUpdateResponse update(UUID productId, ProductUpdateRequest productUpdateRequest);
+    ProductUpdateResponse update(String productId, ProductUpdateRequest productUpdateRequest);
 
-    ProductDeleteResponse deleteById(UUID productId);
+    ProductDeleteResponse deleteById(String productId);
 
-    boolean isAvailable(UUID productId);
+    boolean isAvailable(String productId);
 
 }

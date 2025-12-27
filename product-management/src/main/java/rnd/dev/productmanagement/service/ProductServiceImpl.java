@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import rnd.dev.productmanagement.dto.request.ProductCreateRequest;
 import rnd.dev.productmanagement.dto.request.ProductUpdateRequest;
 import rnd.dev.productmanagement.dto.response.ProductCreateResponse;
@@ -13,7 +14,9 @@ import rnd.dev.productmanagement.dto.response.ProductDtoResponse;
 import rnd.dev.productmanagement.dto.response.ProductUpdateResponse;
 import rnd.dev.productmanagement.entity.Product;
 import rnd.dev.productmanagement.enums.ProductCategory;
-import rnd.dev.productmanagement.utility.DateTimeConverter;
+import rnd.dev.productmanagement.error.exception.ProductNotFoundException;
+import rnd.dev.productmanagement.utility.DateTimeUtility;
+import rnd.dev.productmanagement.utility.IdGeneratorUtility;
 
 import java.util.*;
 
@@ -29,6 +32,7 @@ public class ProductServiceImpl implements ProductService {
         this.productAnemicService = productAnemicService;
     }
 
+    @Transactional
     @Override
     public ProductCreateResponse save(ProductCreateRequest productCreateRequest) {
 
@@ -38,14 +42,16 @@ public class ProductServiceImpl implements ProductService {
         return buildProductCreateResponse(savedProduct);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<ProductDtoResponse> getAll() {
         List<Product> productList = productAnemicService.getAll();
         return buildProductDtoResposList(productList);
     }
 
+    @Transactional
     @Override
-    public ProductUpdateResponse update(UUID productId, ProductUpdateRequest productUpdateRequest) {
+    public ProductUpdateResponse update(String productId, ProductUpdateRequest productUpdateRequest) {
 
         log.info("ProductServiceImpl :: update :: productId : {} :: productUpdateRequest : {}", productId, productUpdateRequest);
 
@@ -53,8 +59,9 @@ public class ProductServiceImpl implements ProductService {
         return buildProductUpdateResponse(updatedProduct);
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public ProductDtoResponse getById(UUID productId) {
+    public ProductDtoResponse getById(String productId) {
 
         log.info("ProductServiceImpl :: getById :: productId : {}", productId);
 
@@ -62,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
         return buildProductDtoResponse(product);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<ProductDtoResponse> getByCategory(ProductCategory productCategory, int pageNumber, int pageSize) {
 
@@ -72,20 +80,21 @@ public class ProductServiceImpl implements ProductService {
         return buildProductDtoResponseForPage(productPageResponse);
     }
 
+    @Transactional
     @Override
-    public ProductDeleteResponse deleteById(UUID productId) {
+    public ProductDeleteResponse deleteById(String productId) {
 
         log.info("ProductServiceImpl :: deleteById :: productId : {}", productId);
 
         if (productAnemicService.findById(productId).isEmpty()) {
-            throw new RuntimeException("No Product Found For Deletion");
+            throw new ProductNotFoundException("No Product Found For Deletion");
         }
         boolean productDeletionFlag = productAnemicService.deleteById(productId);
         return prepareProductDeleteResponse(productId, productDeletionFlag);
     }
-
+    @Transactional(readOnly = true)
     @Override
-    public boolean isAvailable(UUID productId) {
+    public boolean isAvailable(String productId) {
         return productAnemicService.isAvailable(productId);
     }
 
@@ -93,12 +102,13 @@ public class ProductServiceImpl implements ProductService {
 
     private Product buildProductForCreation(ProductCreateRequest productCreateRequest) {
         return Product.builder()
+                .productId(IdGeneratorUtility.generateId())
                 .name(productCreateRequest.getName())
                 .description(productCreateRequest.getDescription())
                 .sku(productCreateRequest.getSku())
                 .productCategory(productCreateRequest.getProductCategory())
                 .price(productCreateRequest.getPrice())
-                .createdAt(DateTimeConverter.getDateTime(new Date()))
+                .createdAt(DateTimeUtility.getDateTime(new Date()))
                 .build();
     }
 
@@ -143,10 +153,10 @@ public class ProductServiceImpl implements ProductService {
 
     /// /////// Product Update /////////////
 
-    private Product buildProductForUpdate(UUID productId, ProductUpdateRequest productUpdateRequest) {
+    private Product buildProductForUpdate(String productId, ProductUpdateRequest productUpdateRequest) {
         Optional<Product> productOptional = productAnemicService.findById(productId);
         if (productOptional.isEmpty()) {
-            throw new RuntimeException("Need Valid Product Id for Update");
+            throw new ProductNotFoundException("Need Valid Product Id for Update");
         }
 
         Product product = productOptional.get();
@@ -167,7 +177,7 @@ public class ProductServiceImpl implements ProductService {
             product.setPrice(productUpdateRequest.getPrice());
         }
 
-        product.setUpdatedAt(DateTimeConverter.getDateTime(new Date()));
+        product.setUpdatedAt(DateTimeUtility.getDateTime(new Date()));
 
         return product;
     }
@@ -188,7 +198,7 @@ public class ProductServiceImpl implements ProductService {
         return productPage.map(this::buildProductDtoResponse);
     }
 
-    private ProductDeleteResponse prepareProductDeleteResponse(UUID productId, boolean productDeletionFlag) {
+    private ProductDeleteResponse prepareProductDeleteResponse(String productId, boolean productDeletionFlag) {
         if (productDeletionFlag) {
             return buildProductDeletionResponse(productId, SUCCESSFUL_DELETION_MESSAGE);
 
@@ -197,7 +207,7 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    private static ProductDeleteResponse buildProductDeletionResponse(UUID productId, String message) {
+    private static ProductDeleteResponse buildProductDeletionResponse(String productId, String message) {
         return ProductDeleteResponse.builder()
                 .productId(productId)
                 .message(message)

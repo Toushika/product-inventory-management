@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 import rnd.dev.productmanagement.entity.Product;
 import rnd.dev.productmanagement.enums.ProductCategory;
 
-import java.util.UUID;
-
 @Repository
-public interface ProductRepository extends JpaRepository<Product, UUID> {
+public interface ProductRepository extends JpaRepository<Product, String> {
     Page<Product> findByProductCategory(ProductCategory productCategory, Pageable pageable);
 }

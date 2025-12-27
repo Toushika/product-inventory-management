@@ -13,9 +13,9 @@ import java.util.UUID;
 @NoArgsConstructor
 public class InventoryDtoResponse {
 
-    private UUID inventoryId;
+    private String inventoryId;
 
-    private UUID productId;
+    private String productId;
 
     private int availableQuantity;
 

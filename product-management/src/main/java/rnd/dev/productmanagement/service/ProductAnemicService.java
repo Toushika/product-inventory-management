@@ -7,7 +7,6 @@ import rnd.dev.productmanagement.enums.ProductCategory;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface ProductAnemicService {
 
@@ -17,11 +16,11 @@ public interface ProductAnemicService {
 
     Product update(Product product);
 
-    Optional<Product> findById(UUID productId);
+    Optional<Product> findById(String productId);
 
     Page<Product> findByCategory(ProductCategory productCategory, Pageable pageable);
 
-    boolean deleteById(UUID productId);
+    boolean deleteById(String productId);
 
-    boolean isAvailable(UUID productId);
+    boolean isAvailable(String productId);
 }

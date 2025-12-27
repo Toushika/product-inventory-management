@@ -6,15 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import rnd.dev.productmanagement.enums.ProductCategory;
 
-import java.util.UUID;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDtoResponse {
 
-    private UUID productId;
+    private String productId;
     private String name;
     private String description;
     private String sku;

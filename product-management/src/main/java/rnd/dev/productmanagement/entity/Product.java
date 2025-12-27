@@ -7,10 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import rnd.dev.productmanagement.enums.ProductCategory;
 
-import java.util.UUID;
+import static rnd.dev.productmanagement.constant.TableConstants.PRODUCTS_TABLE;
 
 @Entity
-@Table(name = "products")
+@Table(name = PRODUCTS_TABLE)
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,8 +18,7 @@ import java.util.UUID;
 public class Product {
 
     @Id
-    @GeneratedValue
-    private UUID productId;
+    private String productId;
 
     private String name;
 

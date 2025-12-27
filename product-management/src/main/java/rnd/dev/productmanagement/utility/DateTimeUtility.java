@@ -5,9 +5,9 @@ import rnd.dev.productmanagement.constant.DateTimeConstants;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateTimeConverter {
+public class DateTimeUtility {
 
-    private DateTimeConverter() {
+    private DateTimeUtility() {
 
     }
 

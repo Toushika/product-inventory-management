@@ -3,7 +3,6 @@ package rnd.dev.inventorymanagement.service;
 import rnd.dev.inventorymanagement.entity.Inventory;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public interface InventoryAnemicService {
 
@@ -11,5 +10,5 @@ public interface InventoryAnemicService {
 
     Inventory reserve(Inventory inventory);
 
-    Optional<Inventory> findByProductid(UUID productId);
+    Optional<Inventory> findByProductid(String productId);
 }
