@@ -82,7 +82,7 @@ This ensures that inventory operations are only performed for valid products.
     * `product_management_db`
     * `inventory_management_db`
 
-### Environment Variables / `application.properties`
+### Environment Variables / `application.yaml`
 
 Each service should be configured with its respective database connection and credentials.
 
