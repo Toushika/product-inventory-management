@@ -5,7 +5,6 @@ import rnd.dev.inventorymanagement.entity.Inventory;
 import rnd.dev.inventorymanagement.repository.InventoryRepository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class InventoryAnemicServiceImpl implements InventoryAnemicService {
@@ -27,7 +26,7 @@ public class InventoryAnemicServiceImpl implements InventoryAnemicService {
     }
 
     @Override
-    public Optional<Inventory> findByProductid(UUID productId) {
+    public Optional<Inventory> findByProductid(String productId) {
         return inventoryRepository.findByProductId(productId);
     }
 }

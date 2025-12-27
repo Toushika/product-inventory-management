@@ -5,9 +5,8 @@ import org.springframework.stereotype.Repository;
 import rnd.dev.inventorymanagement.entity.Inventory;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface InventoryRepository extends JpaRepository<Inventory, UUID> {
-    Optional<Inventory> findByProductId(UUID productId);
+public interface InventoryRepository extends JpaRepository<Inventory, String> {
+    Optional<Inventory> findByProductId(String productId);
 }

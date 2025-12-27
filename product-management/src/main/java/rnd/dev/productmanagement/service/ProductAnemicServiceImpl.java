@@ -4,14 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import rnd.dev.productmanagement.dto.response.ProductDeleteResponse;
 import rnd.dev.productmanagement.entity.Product;
 import rnd.dev.productmanagement.enums.ProductCategory;
 import rnd.dev.productmanagement.repository.ProductRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -39,7 +37,7 @@ public class ProductAnemicServiceImpl implements ProductAnemicService {
     }
 
     @Override
-    public Optional<Product> findById(UUID productId) {
+    public Optional<Product> findById(String productId) {
         return productRepository.findById(productId);
     }
 
@@ -49,13 +47,13 @@ public class ProductAnemicServiceImpl implements ProductAnemicService {
     }
 
     @Override
-    public boolean deleteById(UUID productId) {
+    public boolean deleteById(String productId) {
         productRepository.deleteById(productId);
         return findById(productId).isEmpty();
     }
 
     @Override
-    public boolean isAvailable(UUID productId) {
+    public boolean isAvailable(String productId) {
         return productRepository.existsById(productId);
     }
 }

@@ -3,8 +3,3 @@ spring:
     url: jdbc:postgresql://localhost:5432/jupiter
     username: admin
     password: admin
-
-  jpa:
-    hibernate:
-      ddl-auto: update   # automatically create tables
-    database-platform: org.hibernate.dialect.PostgreSQLDialect

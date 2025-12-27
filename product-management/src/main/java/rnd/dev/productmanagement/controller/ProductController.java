@@ -12,11 +12,10 @@ import rnd.dev.productmanagement.enums.ProductCategory;
 import rnd.dev.productmanagement.service.ProductService;
 
 import java.util.List;
-import java.util.UUID;
 
 import static rnd.dev.productmanagement.constant.ApiUrlConstants.*;
 import static rnd.dev.productmanagement.constant.ParameterConstants.*;
-import static rnd.dev.productmanagement.constant.ResponseMessage.*;
+import static rnd.dev.productmanagement.constant.ResponseMessage.HELLO_PRODUCT_MANAGEMENT_MESSAGE;
 
 @RestController
 public class ProductController extends AbstractController {
@@ -43,12 +42,12 @@ public class ProductController extends AbstractController {
     }
 
     @PutMapping(UPDATE_BY_ID_URL)
-    public ProductUpdateResponse update(@PathVariable(name = PRODUCT_ID) UUID productId, @RequestBody ProductUpdateRequest productUpdateRequest) {
+    public ProductUpdateResponse update(@PathVariable(name = PRODUCT_ID) String productId, @RequestBody ProductUpdateRequest productUpdateRequest) {
         return productService.update(productId, productUpdateRequest);
     }
 
     @GetMapping(GET_BY_ID)
-    public ProductDtoResponse getById(@RequestParam(name = PRODUCT_ID) UUID productId) {
+    public ProductDtoResponse getById(@RequestParam(name = PRODUCT_ID) String productId) {
         return productService.getById(productId);
     }
 
@@ -60,12 +59,12 @@ public class ProductController extends AbstractController {
     }
 
     @DeleteMapping(DELETE_BY_ID_URL)
-    public ProductDeleteResponse deleteById(@PathVariable(name = PRODUCT_ID) UUID productId) {
+    public ProductDeleteResponse deleteById(@PathVariable(name = PRODUCT_ID) String productId) {
         return productService.deleteById(productId);
     }
 
     @GetMapping(AVAILABILITY_CHECK_URL)
-    public boolean isAvailable(@PathVariable(name = PRODUCT_ID) UUID productId) {
+    public boolean isAvailable(@PathVariable(name = PRODUCT_ID) String productId) {
         return productService.isAvailable(productId);
     }
 

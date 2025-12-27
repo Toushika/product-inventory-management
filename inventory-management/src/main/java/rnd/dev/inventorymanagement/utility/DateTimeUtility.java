@@ -5,9 +5,9 @@ import java.util.Date;
 
 import static rnd.dev.inventorymanagement.constant.DatePatternConstants.DATE_TIME_PATTERN;
 
-public class DateTimeConverter {
+public class DateTimeUtility {
 
-    private DateTimeConverter() {
+    private DateTimeUtility() {
 
     }
 

@@ -1,7 +1,6 @@
 package rnd.dev.inventorymanagement.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -9,10 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
+import static rnd.dev.inventorymanagement.constant.TableConstants.INVENTORIES_TABLE;
 
 @Entity
-@Table(name = "inventories")
+@Table(name = INVENTORIES_TABLE)
 @Data
 @Builder
 @AllArgsConstructor
@@ -20,10 +19,9 @@ import java.util.UUID;
 public class Inventory {
 
     @Id
-    @GeneratedValue
-    private UUID inventoryId;
+    private String inventoryId;
 
-    private UUID productId;
+    private String productId;
 
     private int availableQuantity;
 
